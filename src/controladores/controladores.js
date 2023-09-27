@@ -1,5 +1,5 @@
 const { query } = require('express');
-const {contas, depositos, saques, transferencias} = require('../bancodedados');
+const {contas, depositos, saques, transferencias} = require('../conexao');
 const { format } = require('date-fns');
 const listar = (req, res) =>{
     return res.status(200).json(contas)
@@ -10,42 +10,7 @@ const verificaElemento = (campo, valor) =>{
   })
   return elementoExistente
   }
-const criarConta = (req, res) =>{
-    const {Nome,
-        Cpf,
-        DataNascimento,
-        Telefone,
-        Email,
-        Senha} = req.body
-        if(Object.keys(req.body).length === 0){
-            return res.status(400).json({message: "campo incompleto! por favor revise e tente novamente"})
-        }
 
-        const contaCriada = {
-            numero : contas.length+1,
-            saldo: 0,
-            usuario:{
-            Cpf,
-            DataNascimento,
-            Telefone,
-            Email,
-            Senha}
-
-        }
-        const verificaEmail = verificaElemento("Email", Email)
-        const verificarCpf = verificaElemento("Cpf", Cpf)
-        if(verificarCpf !== undefined){
-            return res.status(400).json({message: "Cpf ja existente"})
-        }
-        if(verificaEmail !== undefined){
-            return res.status(400).json({message: "email ja existente"})
-        }
-
-        contas.push(contaCriada)
-
-        return res.status(201).json({...contaCriada})
-
-}
 
 const contaProcuradaIndex = (numeroConta) =>{
   return contas.findIndex((elemento ) =>{
@@ -284,4 +249,4 @@ return res.status(200).json({saques: imprimirSaques, depositos: imprimirDeposito
 }
     
 
-module.exports = {listar, criarConta, atualizarConta, deletarConta, depositar, sacar, transferir, saldo, extrato}
+module.exports = {listar,  atualizarConta, deletarConta, depositar, sacar, transferir, saldo, extrato}

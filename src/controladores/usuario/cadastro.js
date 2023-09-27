@@ -1,22 +1,33 @@
-const knex = require('./../../conexao/conexao')
-const schemaUsuario = require('./schemas')
+require('dotenv').config();
+const validarCampo = require("./validacoes/validarCampos");
+const senha = process.env.SENHAJWT;
+const jwt = require('jsonwebtoken'); // Correção: jwt
+const bcrypt = require('bcrypt');
+const knex = require('../../conexao');
 
-
-const criarConta = async (req, res) =>{
-  const {nome,
+const criarConta = async (req, res) => {
+  const { nome, cpf, data_nascimento, telefone, email, senha } = req.body;
+  try {
+    const camposExistem = await validarCampo(['cpf', 'email', 'telefone'], [cpf, email, telefone]);
+  
+    if (Object.values(camposExistem).some((campo) => campo)) {
+      return res.status(400).json({ message: "Um ou mais campos já estão em uso" });
+    }
+    const senhaCriptografada = await bcrypt.hash(senha, 10);
+    const usuario = {
+      nome,
       cpf,
       data_nascimento,
       telefone,
       email,
-      senha} = req.body
- try {
+      senha: senhaCriptografada,
+    };
+    const novoUsuario = await knex("usuarios").insert(usuario);
 
-  return res.json()
- } catch (error) {
-  console.log(error)
-    return res.status(400).json({message: error.message})
- }
-    
-     
+    return res.status(201).json({message: "usuario criado!"});
+  } catch (error) {
+    return res.status(400).json({ erro: error.message });
+  }
+};
 
-}
+module.exports = { criarConta };
