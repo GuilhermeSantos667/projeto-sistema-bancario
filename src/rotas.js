@@ -5,11 +5,13 @@ const {listar,
     atualizarConta,
     deletarConta,
     depositar,
-    sacar, transferir, saldo, extrato} = require('./controladores/controladores')
+    sacar, transferir, saldo, extrato} = require('./controladores/controladores');
+const { validarReq, schemaUsuario } = require('./controladores/usuario/schemas');
+
 const rotas = express()
+rotas.post('/contas',validarReq(schemaUsuario), criarConta)
 
 rotas.get("/contas", verificadorDeSenha, listar)
-rotas.post('/contas', criarConta)
 rotas.put('/contas/:numeroConta/usuario', atualizarConta)
 rotas.delete('/contas/:numeroConta', deletarConta)
 
