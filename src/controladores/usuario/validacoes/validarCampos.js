@@ -1,4 +1,4 @@
-const knex = require('../../../conexao') 
+const knex = require('../../../conexao/conexao') 
 
 
 const validarCampo = async (campos, valores) => {
@@ -18,9 +18,8 @@ const validarCampo = async (campos, valores) => {
 
     return validacoes;
   } catch (error) {
-    
-    console.error(error);
-    throw error;
+    console.log(error)
+    return error
   }
 };
 
