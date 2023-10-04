@@ -2,7 +2,7 @@ require('dotenv').config();
 const validarCampo = require("./validacoes/validarCampos");
 const senha = process.env.SENHAJWT;
 const bcrypt = require('bcrypt');
-const knex = require('../../conexao/conexao') 
+const knex = require('../../conexao') 
 
 const criarConta = async (req, res) => {
   const { nome, cpf, data_nascimento, telefone, email, senha } = req.body;

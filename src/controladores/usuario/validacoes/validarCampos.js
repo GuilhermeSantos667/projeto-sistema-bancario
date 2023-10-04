@@ -1,4 +1,4 @@
-const knex = require('../../../conexao/conexao') 
+const knex = require('../../../conexao') 
 
 
 const validarCampo = async (campos, valores) => {
