@@ -25,18 +25,30 @@ const schemaUsuario = Joi.object({
     "date.max": "parece que voce ainda ira nascer hahaha"
   })
 });
+const schemaLogin = Joi.object({
+  email: Joi.string().email().required().messages({
+    'any.required': 'o campo email é obrigatorio',
+    "string.email": "o email deve ter um formato valido"
+  }),
+  senha: Joi.string().min(5).required().messages({
+    'any.required': 'o campo senha é obrigatorio',
+    "string.min" : "a senha deve ser de no minimo 5 caracteres"
+  }),
 
+})
 const validarReq = joiSchema => async (req, res, next) => {
   try {
     await joiSchema.validateAsync(req.body);
     next();
   } catch (error) {
+    console.log(error)
     res.status(400).json({ erro: error.message });
   }
 };
 
 module.exports = {
   schemaUsuario,
-  validarReq
+  validarReq,
+  schemaLogin
 };
 

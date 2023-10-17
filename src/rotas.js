@@ -1,18 +1,15 @@
 const express = require('express');
 const {verificadorDeSenha} = require('./middlewares/verificadorSenha');
 const {listar, 
+    criarConta,
     atualizarConta,
     deletarConta,
     depositar,
-    sacar, transferir, saldo, extrato} = require('./controladores/controladores');
-
-const {criarConta} = require('./controladores/usuario/cadastro')
-const { validarReq, schemaUsuario } = require('./controladores/schemas/schemas');
-
+    sacar, transferir, saldo, extrato} = require('./controladores/controladores')
 const rotas = express()
-rotas.post('/contas',validarReq(schemaUsuario), criarConta)
 
 rotas.get("/contas", verificadorDeSenha, listar)
+rotas.post('/contas', criarConta)
 rotas.put('/contas/:numeroConta/usuario', atualizarConta)
 rotas.delete('/contas/:numeroConta', deletarConta)
 

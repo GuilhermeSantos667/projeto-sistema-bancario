@@ -1,4 +1,4 @@
-const {banco} = require('../conexao')
+const {banco} = require('../bancodedados')
 
 
 

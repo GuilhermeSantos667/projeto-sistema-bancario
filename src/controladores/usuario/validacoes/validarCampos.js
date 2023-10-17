@@ -18,9 +18,8 @@ const validarCampo = async (campos, valores) => {
 
     return validacoes;
   } catch (error) {
-    
-    console.error(error);
-    throw error;
+    console.log(error)
+    return error
   }
 };
 
