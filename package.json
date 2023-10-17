@@ -4,7 +4,12 @@
   "description": "![](https://i.imgur.com/xG74tOh.png)",
   "main": "index.js",
   "scripts": {
+<<<<<<< HEAD
     "dev": "nodemon ./src/index.js"
+=======
+    "start": "node ./src/index.js",
+    "test": "jest"
+>>>>>>> ab21c4865ab1fbb2e3cde47fb8e1922780181637
   },
   "keywords": [],
   "author": "",
